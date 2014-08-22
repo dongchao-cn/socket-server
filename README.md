@@ -11,14 +11,17 @@ socket-server
 client每秒会发送一次请求，server保持并发连接并进行相应。
 
 现已实现的模型：
-0. base: 最原始的echo服务器
-1. thread: 多线程模型
-2. select: select模型
-3. poll: poll模型
-4. epoll: epoll模型
+
+1. base: 最原始的echo服务器
+2. thread: 多线程模型
+3. select: select模型
+4. poll: poll模型
+5. epoll: epoll模型
 
 使用方法
 -------
+
+修改`Makefile`中的`DEBUG`变量可以控制是否输出包内容。
 
 `make`，bin目录会生成可执行文件。
 
@@ -29,3 +32,9 @@ client每秒会发送一次请求，server保持并发连接并进行相应。
 * `select_server`: select版server，通过select管理连接
 * `poll_server`: poll版server，通过poll管理连接
 * `epoll_server`: epoll版server，通过epoll管理连接
+
+环境
+----
+
+* ubuntu 12.04
+* g++

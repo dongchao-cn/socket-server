@@ -11,11 +11,21 @@ socket-server
 client每秒会发送一次请求，server保持并发连接并进行相应。
 
 现已实现的模型：
+
 0. base: 最原始的echo服务器
 1. thread: 多线程模型
 2. select: select模型
 3. poll: poll模型
 4. epoll: epoll模型
+
+
+参数
+----
+
+1. 修改`src/clients.sh` 可以生成指定数量的client
+2. 修改`src/base.cpp` 中的`MAX_CLIENT_NUM`参数调整server最大服务数
+3. 修改`src/base.cpp` 中的`CLIENT_INTERVAL`参数调整client发包间隔
+4. 修改`Makefile` 中的`DEBUG`参数确定是否输出调试信息
 
 使用方法
 -------

@@ -8,12 +8,12 @@ all: base.o client
 	g++ -o bin/poll_server src/poll_server.cpp build/base.o $(DEBUG)
 	g++ -o bin/epoll_server src/epoll_server.cpp build/base.o -lpthread $(DEBUG)
 	cp -f src/clients.sh bin/clients.sh
-	chmod +x bin/clients.sh
+	chmod 555 bin/clients.sh
 	@echo DONE!
 
 base.o:
 	-mkdir build
-	g++ -c src/base.cpp -o build/base.o
+	g++ -c src/base.cpp -o build/base.o $(DEBUG)
 
 client: base.o
 	-mkdir bin
@@ -21,5 +21,5 @@ client: base.o
 
 .PHONY : clean
 clean:
-	-rm -r build
-	-rm -r bin
+	-rm -rf build
+	-rm -rf bin

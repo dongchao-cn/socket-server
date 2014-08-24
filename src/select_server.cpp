@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 
         // add active connection to fd set
         set<int>::iterator it;
+        printf("%d\n", (int)(fd_sets.size()));
         for (it = fd_sets.begin(); it != fd_sets.end(); it++) 
             FD_SET(*it, &fdsr);
 
@@ -89,10 +90,6 @@ int main(int argc, char *argv[])
                         continue;
                     }
 
-                    #ifdef DEBUG
-                    sockaddr_in client = get_client_addr(client_sock);
-                    #endif
-
                     // add to fd set
                     if (fd_sets.size()-1 < MAX_CLIENT_NUM)
                     {
@@ -108,10 +105,6 @@ int main(int argc, char *argv[])
                     // client echo message
                     char message[BUF_SIZE];
                     int read_size = recv(*it, message, BUF_SIZE, 0);
-
-                    #ifdef DEBUG
-                    sockaddr_in client = get_client_addr(*it);
-                    #endif
 
                     if (read_size <= 0) 
                     {        

@@ -2,6 +2,7 @@
     C++ ECHO socket client
 */
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -23,8 +24,8 @@ int main(int argc, char *argv[])
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1)
     {
-        perror("Could not create socket");
-        return 1;
+        perror("could not create socket");
+        exit(1);
     }
     
     struct sockaddr_in server_addr;
@@ -35,8 +36,8 @@ int main(int argc, char *argv[])
     //Connect to remote server
     if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
-        perror("connect failed. Error");
-        return 1;
+        perror("connect failed");
+        exit(1);
     }
     
     //keep communicating with server
@@ -50,15 +51,15 @@ int main(int argc, char *argv[])
         print("[Send]: %s\n", message);
         if( send(sock, message, strlen(message)+1, 0) < 0)
         {
-            perror("Send failed");
-            return 1;
+            perror("send failed");
+            exit(1);
         }
 
         //Receive a reply from the server
         if( recv(sock, message, BUF_SIZE, 0) < 0)
         {
             perror("recv failed");
-            return 1;
+            exit(1);
         }
         
         print("[Recv]: %s\n", message);
@@ -66,5 +67,5 @@ int main(int argc, char *argv[])
     }
     
     close(sock);
-    return 0;
+    exit(0);
 }

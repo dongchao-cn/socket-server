@@ -105,10 +105,6 @@ int main(int argc, char *argv[])
                     char message[BUF_SIZE];
                     int read_size = recv(it->fd, message, BUF_SIZE, 0);
 
-                    #ifdef DEBUG
-                    sockaddr_in client = get_client_addr(it->fd);
-                    #endif
-
                     if (read_size <= 0) 
                     {        
                         // client close

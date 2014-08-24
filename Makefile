@@ -1,5 +1,5 @@
-DEBUG = -DDEBUG
-# DEBUG = 
+# DEBUG = -DDEBUG -g
+DEBUG = 
 
 all: base.o client
 	g++ -o bin/base_server src/base_server.cpp build/base.o $(DEBUG)

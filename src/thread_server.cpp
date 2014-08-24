@@ -18,16 +18,6 @@ extern const unsigned int MAX_CLIENT_NUM;
 unsigned int now_client_num = 0;
 pthread_spinlock_t now_client_num_lock;
 
-// void lock()
-// {
-//     pthread_spin_lock(&now_client_num_lock);
-// }
-
-// void unlock()
-// {
-//     pthread_spin_unlock(&now_client_num_lock);
-// }
-
 void add_client(int client_sock)
 {
     pthread_spin_lock(&now_client_num_lock);

@@ -20,6 +20,8 @@ extern const int BACKLOG;
 extern const unsigned int MAX_CLIENT_NUM;
 
 set<int> fd_sets;
+vector<int> need_add;
+vector<int> need_del;
 
 void add_client(int client_sock)
 {
@@ -59,7 +61,6 @@ int main(int argc, char *argv[])
     {
         // initialize file descriptor set
         FD_ZERO(&fdsr);
-        FD_SET(listen_sock, &fdsr);
 
         // add active connection to fd set
         set<int>::iterator it;
@@ -77,10 +78,8 @@ int main(int argc, char *argv[])
         }
 
         // check every fd in the set
-        vector<int> need_add;
-        vector<int> need_del;
         it = fd_sets.begin();
-        while ( ret != 0)
+        while ( ret != 0 && it != fd_sets.end() )
         {
             if (FD_ISSET(*it, &fdsr))
             {
@@ -97,7 +96,6 @@ int main(int argc, char *argv[])
                     // add to fd set
                     if (fd_sets.size()-1 < MAX_CLIENT_NUM)
                     {
-                        // add_client(client_sock);
                         need_add.push_back(client_sock);
                     }
                     else
@@ -114,7 +112,6 @@ int main(int argc, char *argv[])
                     if (read_size <= 0)
                     {
                         // client close
-                        FD_CLR(*it, &fdsr);
                         need_del.push_back(*it);
                     }
                     else
@@ -137,5 +134,7 @@ int main(int argc, char *argv[])
             add_client(*iit);
         for (iit = need_del.begin(); iit != need_del.end(); iit++)
             del_client(*iit);
+        need_add.clear();
+        need_add.clear();
     }
 }

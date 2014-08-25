@@ -5,6 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <set>
+#include <vector>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <sys/select.h>
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
 
         // add active connection to fd set
         set<int>::iterator it;
-        printf("%d\n", (int)(fd_sets.size()));
+
         for (it = fd_sets.begin(); it != fd_sets.end(); it++) 
             FD_SET(*it, &fdsr);
 
@@ -76,7 +77,10 @@ int main(int argc, char *argv[])
         }
 
         // check every fd in the set
-        for (it = fd_sets.begin(); it != fd_sets.end(); it++)
+        vector<int> need_add;
+        vector<int> need_del;
+        it = fd_sets.begin();
+        while ( ret != 0)
         {
             if (FD_ISSET(*it, &fdsr))
             {
@@ -93,7 +97,8 @@ int main(int argc, char *argv[])
                     // add to fd set
                     if (fd_sets.size()-1 < MAX_CLIENT_NUM)
                     {
-                        add_client(client_sock);
+                        // add_client(client_sock);
+                        need_add.push_back(client_sock);
                     }
                     else
                     {
@@ -106,11 +111,11 @@ int main(int argc, char *argv[])
                     char message[BUF_SIZE];
                     int read_size = recv(*it, message, BUF_SIZE, 0);
 
-                    if (read_size <= 0) 
-                    {        
+                    if (read_size <= 0)
+                    {
                         // client close
                         FD_CLR(*it, &fdsr);
-                        del_client(*it);
+                        need_del.push_back(*it);
                     }
                     else
                     {
@@ -121,8 +126,16 @@ int main(int argc, char *argv[])
                         print_send(*it, message);
                     }
                 }
+                ret--;
             }
+            it++;
         }
+
+        //  need_add&need_del to fd_sets
+        vector<int>::iterator iit;
+        for (iit = need_add.begin(); iit != need_add.end(); iit++)
+            add_client(*iit);
+        for (iit = need_del.begin(); iit != need_del.end(); iit++)
+            del_client(*iit);
     }
-    return 0;
 }

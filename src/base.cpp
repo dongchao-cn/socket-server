@@ -6,11 +6,11 @@
 #include <unistd.h>
 #include "base.h"
 extern const int BUF_SIZE = 1024;
-extern const char SERVER_IP[] = "127.0.0.1";
+extern const char SERVER_IP[] = "0.0.0.0";
 extern const int SERVER_PORT = 8888;
 extern const int BACKLOG = 3;
 
-extern const unsigned int MAX_CLIENT_NUM = 5*1024 + 10;
+extern const unsigned int MAX_CLIENT_NUM = 100*1024 + 10;
 extern const char ERR_MESSAGE[] = "[ERR]too many clients!!!";
 extern const int CLIENT_INTERVAL = 1;
 

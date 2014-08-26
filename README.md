@@ -63,4 +63,4 @@ CPU占用率
 环境
 ----
 
-https://registry.hub.docker.com/u/dccrazyboy/socket-server/dockerfile/
+https://registry.hub.docker.com/u/dccrazyboy/socket-server/

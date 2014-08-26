@@ -63,5 +63,4 @@ CPU占用率
 环境
 ----
 
-* ubuntu 12.04
-* g++
+https://registry.hub.docker.com/u/dccrazyboy/socket-server/dockerfile/
